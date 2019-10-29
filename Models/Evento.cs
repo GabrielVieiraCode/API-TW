@@ -5,36 +5,49 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace API_TW.Models
 {
+    [Table("evento")]
     public partial class Evento
     {
-        public Evento()
-        {
-            Presenca = new HashSet<Presenca>();
-        }
-
         [Key]
-        [Column("Evento_id")]
-        public int EventoId { get; set; }
-        [Required]
-        [StringLength(255)]
-        public string Titulo { get; set; }
-        [Column("Categoria_id")]
-        public int? CategoriaId { get; set; }
-        [Required]
-        [Column("Acesso_livre")]
-        public bool? AcessoLivre { get; set; }
-        [Column("Data_evento", TypeName = "datetime")]
-        public DateTime DataEvento { get; set; }
-        [Column("Localizacao_id")]
-        public int? LocalizacaoId { get; set; }
+        [Column("id_evento")]
+        public int IdEvento { get; set; }
+        [Column("nome")]
+        [StringLength(50)]
+        public string Nome { get; set; }
+        [Column("data_evento", TypeName = "date")]
+        public DateTime? DataEvento { get; set; }
+        [Column("localizacao")]
+        [StringLength(50)]
+        public string Localizacao { get; set; }
+        [Column("hora", TypeName = "datetime")]
+        public DateTime? Hora { get; set; }
+        [Column("descricao")]
+        [StringLength(200)]
+        public string Descricao { get; set; }
+        [Column("sala")]
+        [MaxLength(1)]
+        public byte[] Sala { get; set; }
+        [Column("interprete")]
+        [MaxLength(1)]
+        public byte[] Interprete { get; set; }
+        [Column("alimentaçao")]
+        [MaxLength(1)]
+        public byte[] Alimentaçao { get; set; }
+        [Column("id_comunidade")]
+        public int? IdComunidade { get; set; }
+        [Column("id_categoria")]
+        public int? IdCategoria { get; set; }
+        [Column("id_adm")]
+        public int? IdAdm { get; set; }
 
-        [ForeignKey(nameof(CategoriaId))]
-        [InverseProperty("Evento")]
-        public virtual Categoria Categoria { get; set; }
-        [ForeignKey(nameof(LocalizacaoId))]
-        [InverseProperty("Evento")]
-        public virtual Localizacao Localizacao { get; set; }
-        [InverseProperty("Evento")]
-        public virtual ICollection<Presenca> Presenca { get; set; }
+        [ForeignKey(nameof(IdAdm))]
+        [InverseProperty(nameof(TblAdm.Evento))]
+        public virtual TblAdm IdAdmNavigation { get; set; }
+        [ForeignKey(nameof(IdCategoria))]
+        [InverseProperty(nameof(Categoria.Evento))]
+        public virtual Categoria IdCategoriaNavigation { get; set; }
+        [ForeignKey(nameof(IdComunidade))]
+        [InverseProperty(nameof(TblComunidade.Evento))]
+        public virtual TblComunidade IdComunidadeNavigation { get; set; }
     }
 }

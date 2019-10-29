@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace API_TW.Models
 {
+    [Table("categoria")]
     public partial class Categoria
     {
         public Categoria()
@@ -13,13 +14,13 @@ namespace API_TW.Models
         }
 
         [Key]
-        [Column("Categoria_id")]
-        public int CategoriaId { get; set; }
-        [Required]
-        [StringLength(255)]
-        public string Titulo { get; set; }
+        [Column("id_categoria")]
+        public int IdCategoria { get; set; }
+        [Column("nome_categoria")]
+        [StringLength(50)]
+        public string NomeCategoria { get; set; }
 
-        [InverseProperty("Categoria")]
+        [InverseProperty("IdCategoriaNavigation")]
         public virtual ICollection<Evento> Evento { get; set; }
     }
 }
